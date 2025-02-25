@@ -9,10 +9,10 @@ export default async function status(req, res) {
   const userMax = await database.query("SHOW max_connections;");
   const userMaxValue = userMax.rows[0].max_connections;
 
-  const databaseName = process.env.POSTGRES_DB;
+  const dbClient = await database.getNewClient();
   const userUp = await database.query({
     text: "SELECT count(*) FROM pg_stat_activity WHERE datname = $1;",
-    values: [databaseName],
+    values: [dbClient],
   });
 
   const userUpValue = userUp.rows[0].count;
