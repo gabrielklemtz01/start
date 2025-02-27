@@ -12,7 +12,7 @@ export default async function status(req, res) {
   const userUp = await database.query(
     "SELECT count(*) FROM pg_stat_activity WHERE datname = 'staging';"
   );
-  console.log(userUp);
+
   const userUpValue = userUp.rows[0].count;
 
   console.log(userUpValue);
@@ -21,7 +21,7 @@ export default async function status(req, res) {
     updated_At: updatedAt,
     dependecies: {
       database: {
-        user_Up: "parseInt(userUpValue)",
+        user_Up: parseInt(userUpValue),
         user_Max: parseInt(userMaxValue),
         version: versionPostValue,
       },
