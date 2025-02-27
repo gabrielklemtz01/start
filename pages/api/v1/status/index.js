@@ -9,19 +9,19 @@ export default async function status(req, res) {
   const userMax = await database.query("SHOW max_connections;");
   const userMaxValue = userMax.rows[0].max_connections;
 
-  const dbClient = await database.getNewClient();
-  const userUp = await database.query({
-    text: "SELECT count(*) FROM pg_stat_activity WHERE datname = $1;",
-    values: [dbClient],
-  });
-
+  const userUp = await database.query(
+    "SELECT count(*) FROM pg_stat_activity WHERE datname = 'staging';"
+  );
+  console.log(userUp);
   const userUpValue = userUp.rows[0].count;
+
+  console.log(userUpValue);
 
   res.status(200).json({
     updated_At: updatedAt,
     dependecies: {
       database: {
-        user_Up: parseInt(userUpValue),
+        user_Up: "parseInt(userUpValue)",
         user_Max: parseInt(userMaxValue),
         version: versionPostValue,
       },
