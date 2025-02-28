@@ -10,6 +10,7 @@ export default async function migrations(req, res) {
     verbose: true,
     dir: join("infra", "migrations"),
     direction: "up",
+    schema: "public",
     migrationsTable: "pgmigrations",
   };
 

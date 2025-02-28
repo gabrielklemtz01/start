@@ -9,13 +9,22 @@ export default async function status(req, res) {
   const userMax = await database.query("SHOW max_connections;");
   const userMaxValue = userMax.rows[0].max_connections;
 
-  const userUp = await database.query(
-    "SELECT count(*) FROM pg_stat_activity WHERE datname = 'staging';"
-  );
+  const query = {
+    text: "SELECT count(*) FROM pg_stat_activity WHERE datname = $1",
+    values: [process.env.POSTGRES_DB],
+  };
 
-  const userUpValue = userUp.rows[0].count;
+  const result = await database.query(query);
 
-  console.log(userUpValue);
+  const userUpValue = result.rows[0].count;
+
+  // const userUp = await database.query(
+  //   "SELECT count(*) FROM pg_stat_activity WHERE datname = 'local_db';"
+  // );
+
+  // const userUpValue = userUp.rows[0].count;
+
+  // await console.log(userUpValue);
 
   res.status(200).json({
     updated_At: updatedAt,

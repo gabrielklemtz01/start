@@ -11,5 +11,5 @@ test("Get para api/v1/status deve retornar 200", async () => {
 
   expect(resBody.dependecies.database.user_Max).toBe(100);
 
-  // expect(resBody.dependecies.database.user_Up).toEqual(1);
+  expect(resBody.dependecies.database.user_Up).toEqual(1);
 });
