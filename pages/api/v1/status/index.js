@@ -18,14 +18,6 @@ export default async function status(req, res) {
 
   const userUpValue = result.rows[0].count;
 
-  // const userUp = await database.query(
-  //   "SELECT count(*) FROM pg_stat_activity WHERE datname = 'local_db';"
-  // );
-
-  // const userUpValue = userUp.rows[0].count;
-
-  // await console.log(userUpValue);
-
   res.status(200).json({
     updated_At: updatedAt,
     dependecies: {
